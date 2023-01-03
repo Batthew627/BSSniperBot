@@ -1,4 +1,4 @@
-import { Options, SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder,  } from "discord.js";
 import {command} from '../../utils'
 import {playlistOfScoresBelowGivenAccuracy, getPlayerData, writePlaylist} from 'bssniper'
 const meta = new SlashCommandBuilder()
@@ -27,9 +27,14 @@ export default command(meta, async ({interaction})=>{
 
     const user = getPlayerData(ssid ?? 'null')
     writePlaylist(await playlistOfScoresBelowGivenAccuracy(await(user),acc,ranked))
+    const name = (await playlistOfScoresBelowGivenAccuracy(await(user),acc,ranked)).playlistTitle.concat('.json')
 
-    return interaction.reply({
+    return await interaction.reply({
         ephemeral:true,
-        content: ssid ?? 'pong'
+        //content: ssid ?? 'pong',
+        files: [{
+            attachment: name,
+            name: `${name}.json`
+        }],
     })
 })
