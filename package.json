@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon --config nodemon.json src/index.ts",
     "build": "tsc",
-    "start": "node ."
+    "start": "node .",
+    "deploy":"cross-env IS_SCRIPT=true ts-node src/scripts/deploy",
+    "deploy-prod": "cross-env NODE_ENV=production npm run deploy"
   },
   "keywords": [],
   "author": "Batthew",
@@ -19,6 +21,7 @@
   },
   "dependencies": {
     "bssniper": "github:rocker1904/BSSniper",
+    "cross-env": "^7.0.3",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3"
   }

@@ -1,2 +1,3 @@
 import debug from "./debug";
-export default[debug]
+import playlists from './playlists'
+export default[debug,playlists]
