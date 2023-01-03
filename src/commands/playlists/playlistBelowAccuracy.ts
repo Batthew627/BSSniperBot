@@ -31,7 +31,7 @@ export default command(meta, async ({interaction})=>{
 
     return await interaction.reply({
         ephemeral:true,
-        //content: ssid ?? 'pong',
+        content: 'Here is your playlist',
         files: [{
             attachment: name,
             name: `${name}.json`
