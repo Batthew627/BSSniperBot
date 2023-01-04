@@ -1,6 +1,7 @@
 import { SlashCommandBuilder,  } from "discord.js";
 import {command} from '../../utils'
 import {playlistOfScoresBelowGivenAccuracy, getPlayerData, writePlaylist} from 'bssniper'
+import fs from 'fs'
 const meta = new SlashCommandBuilder()
 .setName('playlist-below-accuracy')
 .setDescription('Generate a playlist of songs you have under a given accuracy')
@@ -34,7 +35,7 @@ export default command(meta, async ({interaction})=>{
         content: 'Here is your playlist',
         files: [{
             attachment: name,
-            name: `${name}.json`
+            name:name
         }],
-    })
+    }).then()
 })
