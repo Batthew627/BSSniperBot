@@ -29,13 +29,17 @@ export default command(meta, async ({interaction})=>{
     const user = getPlayerData(ssid ?? 'null')
     writePlaylist(await playlistOfScoresBelowGivenAccuracy(await(user),acc,ranked))
     const name = (await playlistOfScoresBelowGivenAccuracy(await(user),acc,ranked)).playlistTitle.concat('.json')
-
-    return await interaction.reply({
+    const path = `./playlists/${name}`
+    await interaction.reply({
         ephemeral:true,
         content: 'Here is your playlist',
         files: [{
-            attachment: name,
+            attachment: path,
             name:name
         }],
-    }).then()
+    })
+    fs.unlink(path, (err) => {
+        if (err) throw err;
+        console.log(`${path} was deleted`);
+      });
 })
