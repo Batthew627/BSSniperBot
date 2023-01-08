@@ -1,9 +1,9 @@
 
-import { Keys  } from "../types";
+import { Keys } from '../types';
 
 const keys : Keys = {
     clientToken: process.env.CLIENT_TOKEN ?? 'nil',
-    testGuild:process.env.TEST_GUILD ?? 'nil'
-}
+    testGuild: process.env.TEST_GUILD ?? 'nil',
+};
 
-export default keys
+export default keys;

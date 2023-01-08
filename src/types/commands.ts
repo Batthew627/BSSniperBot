@@ -1,15 +1,15 @@
-import {Awaitable,Client,ChatInputCommandInteraction,SlashCommandBuilder } from 'discord.js'
+import { Awaitable, Client, ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 
-type LoggerFunction = (...args: unknown[]) => void
+type LoggerFunction = (...args: unknown[]) => void;
 export interface CommandProps{
     interaction: ChatInputCommandInteraction
     client: Client
     log: LoggerFunction
 }
-export type CommandExec=(props: CommandProps  )=> Awaitable<unknown>
+export type CommandExec=(props: CommandProps )=> Awaitable<unknown>;
 export type CommandMeta =
 | SlashCommandBuilder
-| Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
+| Omit<SlashCommandBuilder, 'addSubcommand' | 'addSubcommandGroup'>;
 
 export interface Command{
     meta: CommandMeta
@@ -17,6 +17,6 @@ export interface Command{
 }
 
 export interface CommandCategory{
-    name:String
+    name:string
     commands: Command[]
 }
