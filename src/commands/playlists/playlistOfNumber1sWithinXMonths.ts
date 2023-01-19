@@ -25,6 +25,10 @@ export default command(meta, async ({ interaction })=>{
 
     const user1 = await getPlayerData(ssid1);
 
+    await interaction.reply({
+        content: 'Generating your playlist...',
+    });
+
     void writePlaylist(await playlistOfNumber1sWithinXMonths(user1, months));
     const name = windowsFileNamify((await playlistOfNumber1sWithinXMonths(user1, months)).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
