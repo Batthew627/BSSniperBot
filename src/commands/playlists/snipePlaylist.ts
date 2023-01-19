@@ -28,12 +28,13 @@ export default command(meta, async ({ interaction })=>{
     const ranked = interaction.options.getBoolean('ranked-only')!;
     // these are required options so should never be null
 
-    const user1 = await getPlayerData(ssid1);
-    const user2 = await getPlayerData(ssid2);
-
     await interaction.reply({
         content: 'Generating your playlist...',
     });
+
+    const user1 = await getPlayerData(ssid1);
+    const user2 = await getPlayerData(ssid2);
+
 
     void writePlaylist(await snipePlaylist(user1, user2, ranked));
     const name = windowsFileNamify((await snipePlaylist(user1, user2, ranked)).playlistTitle).concat('.json');
