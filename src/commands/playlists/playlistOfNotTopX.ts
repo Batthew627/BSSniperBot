@@ -39,7 +39,7 @@ export default command(meta, async ({ interaction })=>{
     void writePlaylist(await playlistOfNotTopX(user1, x, ranked));
     const name = windowsFileNamify((await playlistOfNotTopX(user1, x, ranked)).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
-    await interaction.reply({
+    await interaction.editReply({
         content: 'Here is your playlist',
         files: [{
             attachment: path,

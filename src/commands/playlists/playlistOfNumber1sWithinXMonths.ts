@@ -32,7 +32,7 @@ export default command(meta, async ({ interaction })=>{
     void writePlaylist(await playlistOfNumber1sWithinXMonths(user1, months));
     const name = windowsFileNamify((await playlistOfNumber1sWithinXMonths(user1, months)).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
-    await interaction.reply({
+    await interaction.editReply({
         content: 'Here is your playlist',
         files: [{
             attachment: path,
