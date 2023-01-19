@@ -30,7 +30,7 @@ setInterval(async ()=>{
     if (latestRankedDate !== currentMostRankedDate) {
         currentMostRankedDate = latestRankedDate;
         console.log('hi');
-        await writePlaylist(await rankedPlaylistByStarValue(0, 100, 'http://batthew.co.uk/static/ranked.json'), './static', 'ranked');
+        await writePlaylist(await rankedPlaylistByStarValue(0, 100, 'http://batthew.co.uk:8080/static/ranked.json'), './static', 'ranked');
     }
 }, 60000);
 
