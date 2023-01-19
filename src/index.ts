@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => console.log(`Server listening on port: ${port}`));
 
-app.use(express.static('resources'));
+app.use('/static', express.static('static'));
 
 export function windowsFileNamify(file:string) {
     return file.replace(/[\/\\:*?"<>|]/g, '_');

@@ -9,10 +9,12 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build
+
 
 
 FROM base as production
 
-ENV NODE_PATH=./dist
+ENV NODE_PATH=./build
 
 RUN npm run build
