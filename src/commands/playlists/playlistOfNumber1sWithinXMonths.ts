@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { command } from '../../utils';
 import { getPlayerData, writePlaylist, playlistOfNumber1sWithinXMonths } from 'bssniper';
 import fs from 'fs';
+import { windowsFileNamify } from '../..';
 const meta = new SlashCommandBuilder()
     .setName('number-ones-within-months')
     .setDescription('Generate a playlist of maps you have the highest score on within a given amount of months')
@@ -25,7 +26,7 @@ export default command(meta, async ({ interaction })=>{
     const user1 = await getPlayerData(ssid1);
 
     void writePlaylist(await playlistOfNumber1sWithinXMonths(user1, months));
-    const name = (await playlistOfNumber1sWithinXMonths(user1, months)).playlistTitle.concat('.json');
+    const name = windowsFileNamify((await playlistOfNumber1sWithinXMonths(user1, months)).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',

@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { command } from '../../utils';
 import { getPlayerData, writePlaylist, playlistOfNotTopX } from 'bssniper';
 import fs from 'fs';
+import { windowsFileNamify } from '../..';
 const meta = new SlashCommandBuilder()
     .setName('playlist-of-not-top-x')
     .setDescription('Generate a playlist you are top not X in (i.e below top 50)')
@@ -32,7 +33,7 @@ export default command(meta, async ({ interaction })=>{
     const user1 = await getPlayerData(ssid);
 
     void writePlaylist(await playlistOfNotTopX(user1, x, ranked));
-    const name = (await playlistOfNotTopX(user1, x, ranked)).playlistTitle.concat('.json');
+    const name = windowsFileNamify((await playlistOfNotTopX(user1, x, ranked)).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',

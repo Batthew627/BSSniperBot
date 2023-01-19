@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { command } from '../../utils';
 import { rankedPlaylistByStarValue, writePlaylist } from 'bssniper';
 import fs from 'fs';
+import { windowsFileNamify } from '../..';
 
 const meta = new SlashCommandBuilder()
     .setName('ranked-playlist-by-star-value')
@@ -26,7 +27,7 @@ export default command(meta, async ({ interaction })=>{
     const maxStar = interaction.options.getNumber('max-star')!;
 
     void writePlaylist(await(rankedPlaylistByStarValue(minStar, maxStar)));
-    const name = (await (rankedPlaylistByStarValue(minStar, maxStar))).playlistTitle.concat('.json');
+    const name = windowsFileNamify((await (rankedPlaylistByStarValue(minStar, maxStar))).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',

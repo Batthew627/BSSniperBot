@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { command } from '../../utils';
 import { getPlayerData, writePlaylist, playlistByCombo } from 'bssniper';
 import fs from 'fs';
+import { windowsFileNamify } from '../..';
 const meta = new SlashCommandBuilder()
     .setName('playlist-by-combo')
     .setDescription('Generate a playlist of maps you have either got a full combo on or dont have a full combo on')
@@ -32,7 +33,7 @@ export default command(meta, async ({ interaction })=>{
     const user1 = await getPlayerData(ssid);
 
     void writePlaylist(await playlistByCombo(user1, fullCombo, ranked));
-    const name = (await playlistByCombo(user1, fullCombo, ranked)).playlistTitle.concat('.json');
+    const name = windowsFileNamify((await playlistByCombo(user1, fullCombo, ranked)).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',

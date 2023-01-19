@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { command } from '../../utils';
 import { getPlayerData, writePlaylist, playlistByPercievedWorstScore } from 'bssniper';
 import fs from 'fs';
+import { windowsFileNamify } from '../..';
 const meta = new SlashCommandBuilder()
     .setName('playlist-of-percived-worst-score')
     .setDescription('Generate a playlist that orders based on percieved potential improvement')
@@ -39,7 +40,7 @@ export default command(meta, async ({ interaction })=>{
     const user1 = await getPlayerData(ssid);
 
     void writePlaylist(await playlistByPercievedWorstScore(user1, minStar, maxStar, belowRank));
-    const name = (await playlistByPercievedWorstScore(user1, minStar, maxStar, belowRank)).playlistTitle.concat('.json');
+    const name = windowsFileNamify((await playlistByPercievedWorstScore(user1, minStar, maxStar, belowRank)).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',

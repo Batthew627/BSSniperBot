@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { command } from '../../utils';
 import { getPlayerData, writePlaylist, snipePlaylist } from 'bssniper';
 import fs from 'fs';
+import { windowsFileNamify } from '../..';
 const meta = new SlashCommandBuilder()
     .setName('snipe-playlist')
     .setDescription('Generate a playlist of songs you have a worse score on than the other user')
@@ -31,7 +32,7 @@ export default command(meta, async ({ interaction })=>{
     const user2 = await getPlayerData(ssid2);
 
     void writePlaylist(await snipePlaylist(user1, user2, ranked));
-    const name = (await snipePlaylist(user1, user2, ranked)).playlistTitle.concat('.json');
+    const name = windowsFileNamify((await snipePlaylist(user1, user2, ranked)).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',

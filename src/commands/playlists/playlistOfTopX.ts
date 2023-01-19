@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { command } from '../../utils';
 import { getPlayerData, writePlaylist, playlistOfTopX } from 'bssniper';
 import fs from 'fs';
+import { windowsFileNamify } from '../..';
 const meta = new SlashCommandBuilder()
     .setName('playlist-of-top-x')
     .setDescription('Generate a playlist you are top X in (i.e top 50)')
@@ -32,7 +33,7 @@ export default command(meta, async ({ interaction })=>{
     const user1 = await getPlayerData(ssid);
 
     void writePlaylist(await playlistOfTopX(user1, x, ranked));
-    const name = (await playlistOfTopX(user1, x, ranked)).playlistTitle.concat('.json');
+    const name = windowsFileNamify((await playlistOfTopX(user1, x, ranked)).playlistTitle).concat('.json');
     const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',
