@@ -6,6 +6,7 @@ import ScoreSaberAPI from 'scoresaber.js';
 import { rankedPlaylistByStarValue, writePlaylist } from 'bssniper';
 
 config({ path: resolve(__dirname, '..', '.env') });
+import './client';
 
 const app = express();
 const port = 8080;
