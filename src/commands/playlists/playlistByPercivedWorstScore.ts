@@ -48,7 +48,7 @@ export default command(meta, async ({ interaction })=>{
             name: name,
         }],
     });
-    fs.unlink(name, err => {
+    fs.unlink(path, err => {
         if (err) throw err;
         console.log(`${name} was deleted`);
     });
