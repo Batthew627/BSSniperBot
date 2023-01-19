@@ -33,10 +33,11 @@ export default command(meta, async ({ interaction })=>{
 
     void writePlaylist(await playlistByCombo(user1, fullCombo, ranked));
     const name = (await playlistByCombo(user1, fullCombo, ranked)).playlistTitle.concat('.json');
+    const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',
         files: [{
-            attachment: name,
+            attachment: path,
             name: name,
         }],
     });

@@ -18,10 +18,11 @@ export default command(meta, async ({ interaction })=>{
 
     void writePlaylist(await playlistOfNumber1s(user1));
     const name = (await playlistOfNumber1s(user1)).playlistTitle.concat('.json');
+    const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',
         files: [{
-            attachment: name,
+            attachment: path,
             name: name,
         }],
     });

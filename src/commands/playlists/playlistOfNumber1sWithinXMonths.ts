@@ -26,10 +26,11 @@ export default command(meta, async ({ interaction })=>{
 
     void writePlaylist(await playlistOfNumber1sWithinXMonths(user1, months));
     const name = (await playlistOfNumber1sWithinXMonths(user1, months)).playlistTitle.concat('.json');
+    const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',
         files: [{
-            attachment: name,
+            attachment: path,
             name: name,
         }],
     });

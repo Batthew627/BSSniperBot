@@ -27,10 +27,11 @@ export default command(meta, async ({ interaction })=>{
 
     void writePlaylist(await(rankedPlaylistByStarValue(minStar, maxStar)));
     const name = (await (rankedPlaylistByStarValue(minStar, maxStar))).playlistTitle.concat('.json');
+    const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',
         files: [{
-            attachment: name,
+            attachment: path,
             name: name,
         }],
     });

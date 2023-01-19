@@ -40,10 +40,11 @@ export default command(meta, async ({ interaction })=>{
 
     void writePlaylist(await playlistByPercievedWorstScore(user1, minStar, maxStar, belowRank));
     const name = (await playlistByPercievedWorstScore(user1, minStar, maxStar, belowRank)).playlistTitle.concat('.json');
+    const path = `./playlists/${name}`;
     await interaction.reply({
         content: 'Here is your playlist',
         files: [{
-            attachment: name,
+            attachment: path,
             name: name,
         }],
     });
