@@ -1,24 +1,31 @@
-
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { config } from 'dotenv';
 import fs from 'fs';
 import path, { resolve } from 'path';
 import express from 'express';
 import ScoreSaberAPI from 'scoresaber.js';
 import { getPlayerData, rankedPlaylistByStarValue, snipePlaylist, writePlaylist } from 'bssniper';
-
-const serverUrl = 'http://localhost:3000';
-
+import cors from 'cors';
 
 config({ path: resolve(__dirname, '..', '.env') });
 import './client';
 
+
 const app = express();
 const port = 8080;
-
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+
+app.get('/index', async (_req, res) => {
+    const temp = await snipedata();
+    res.send(temp);
+});
+
 
 app.listen(port, () => console.log(`Server listening on port: ${port}`));
 
@@ -38,13 +45,13 @@ app.post('/update-html', (req, res) => {
     });
 });
 
-export function windowsFileNamify(file:string) {
+export function windowsFileNamify(file: string) {
     return file.replace(/[\/\\:*?"<>|]/g, '_');
 }
 
-let currentMostRankedDate:Date;
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
-setInterval(async ()=>{
+let currentMostRankedDate: Date;
+setInterval(async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const latestRankedDate = (await ScoreSaberAPI.fetchLatestRankedMaps()).leaderboards[0].rankedDate;
     if (latestRankedDate !== currentMostRankedDate) {
         currentMostRankedDate = latestRankedDate;
@@ -53,12 +60,11 @@ setInterval(async ()=>{
     }
 }, 60000);
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
-setInterval(async () =>{
-    const aug = (await getPlayerData('76561199073044136'));
-    const totalAugScores = aug.playerScores.length;
-    const bat = (await getPlayerData('76561198121538359'));
-    const snipe = (await snipePlaylist(aug, bat, false)).songs.length;
-    console.log(`${snipe} / ${totalAugScores}`);
-}, 6000);
-
+async function snipedata() {
+    const august = (await getPlayerData('76561199073044136'));
+    const batthew = (await getPlayerData('76561198121538359'));
+    const batSnipe = (await snipePlaylist(august, batthew, false)).songs.length;
+    const augSnipe = (await snipePlaylist(batthew, august, false)).songs.length;
+    const totalScores = batSnipe + augSnipe;
+    return `${batSnipe} / ${totalScores}`;
+}
