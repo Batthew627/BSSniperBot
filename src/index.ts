@@ -21,11 +21,15 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/index', async (_req, res) => {
-    const temp = await snipedata();
+app.get('/batthew', async (_req, res) => {
+    const temp = await snipedata('76561199073044136', '76561198121538359');
     res.send(temp);
 });
 
+app.get('/august', async (_req, res) => {
+    const temp = await snipedata('76561198121538359', '76561199073044136');
+    res.send(temp);
+});
 
 app.listen(port, () => console.log(`Server listening on port: ${port}`));
 
@@ -56,15 +60,15 @@ setInterval(async () => {
     if (latestRankedDate !== currentMostRankedDate) {
         currentMostRankedDate = latestRankedDate;
         console.log('hi');
-        await writePlaylist(await rankedPlaylistByStarValue(0, 100, 'http://batthew.co.uk:8080/static/ranked.json'), './static', 'ranked');
+        await writePlaylist(await rankedPlaylistByStarValue(0, 100, 'http://player2.co.uk:8080/static/ranked.json'), './static', 'ranked');
     }
 }, 60000);
 
-async function snipedata() {
-    const august = (await getPlayerData('76561199073044136'));
-    const batthew = (await getPlayerData('76561198121538359'));
-    const batSnipe = (await snipePlaylist(august, batthew, false)).songs.length;
-    const augSnipe = (await snipePlaylist(batthew, august, false)).songs.length;
-    const totalScores = batSnipe + augSnipe;
-    return `${batSnipe} / ${totalScores}`;
+async function snipedata(ssid1: string, ssid2: string) {
+    const player1 = (await getPlayerData(ssid1));
+    const player2 = (await getPlayerData(ssid2));
+    const player2Snipe = (await snipePlaylist(player1, player2, false)).songs.length;
+    const player1Snipe = (await snipePlaylist(player2, player1, false)).songs.length;
+    const totalScores = player2Snipe + player1Snipe;
+    return `${player2Snipe} / ${totalScores}`;
 }
