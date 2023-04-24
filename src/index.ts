@@ -7,9 +7,19 @@ import path, { resolve } from 'path';
 import express from 'express';
 import ScoreSaberAPI from 'scoresaber.js';
 import { getPlayerData, rankedPlaylistByStarValue, snipePlaylist, writePlaylist } from 'bssniper';
+import util from 'util';
 
 const app = express();
 const port = 8080;
+
+// Converts an image at a given file path to a base64 string.
+async function imgToBase64(imagePath: string): Promise<string> {
+    let ext = path.extname(imagePath).substr(1);
+    if (ext === 'svg') ext = 'svg+xml';
+    const readFile = util.promisify(fs.readFile);
+    const imgData = await readFile(imagePath);
+    return `data:image/${ext}$;base64,${imgData.toString('base64')}`;
+}
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -42,10 +52,13 @@ setInterval(async () =>{
     const aug = await getPlayerData('76561199073044136');
     const batPlaylist = await snipePlaylist(bat, aug, false);
     const augPlaylist = await snipePlaylist(aug, bat, false);
-    batPlaylist.syncURL=`http://batthew.co.uk:8080/static/${windowsFileNamify(batPlaylist.playlistTitle)}`;
-    augPlaylist.syncURL=`http://batthew.co.uk:8080/static/${windowsFileNamify(augPlaylist.playlistTitle)}`;
-    await writePlaylist(batPlaylist, './static');
-    await writePlaylist(augPlaylist, './static');
-}, 300000);
+    batPlaylist.image= await imgToBase64('./static/auguxt.png');
+    augPlaylist.image = await imgToBase64('./static/bat.png');
+    batPlaylist.syncURL=`http://batthew.co.uk:8080/static/batthew.json`;
+    augPlaylist.syncURL=`http://batthew.co.uk:8080/static/august.json`;
+    await writePlaylist(batPlaylist, './static', 'batthew');
+    await writePlaylist(augPlaylist, './static', 'august');
+    console.log('boo');
+}, 60000);
 
 
