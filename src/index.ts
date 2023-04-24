@@ -8,6 +8,17 @@ import express from 'express';
 import ScoreSaberAPI from 'scoresaber.js';
 import { getPlayerData, rankedPlaylistByStarValue, snipePlaylist, writePlaylist } from 'bssniper';
 
+const app = express();
+const port = 8080;
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+app.listen(port, () => console.log(`Server listening on port: ${port}`));
+
+app.use('/static', express.static('static'));
+
 config({ path: resolve(__dirname, '..', '.env') });
 import './client';
 
