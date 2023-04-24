@@ -42,8 +42,8 @@ setInterval(async () =>{
     const aug = await getPlayerData('76561199073044136');
     const batPlaylist = await snipePlaylist(bat, aug, false);
     const augPlaylist = await snipePlaylist(aug, bat, false);
-    batPlaylist.syncURL=`http://batthew.co.uk:8080/static/${batPlaylist.playlistTitle}`;
-    augPlaylist.syncURL=`http://batthew.co.uk:8080/static/${augPlaylist.playlistTitle}`;
+    batPlaylist.syncURL=`http://batthew.co.uk:8080/static/${windowsFileNamify(batPlaylist.playlistTitle)}`;
+    augPlaylist.syncURL=`http://batthew.co.uk:8080/static/${windowsFileNamify(augPlaylist.playlistTitle)}`;
     await writePlaylist(batPlaylist, './static');
     await writePlaylist(augPlaylist, './static');
 }, 300000);
