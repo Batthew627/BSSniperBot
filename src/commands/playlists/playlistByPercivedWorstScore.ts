@@ -4,7 +4,7 @@ import { getPlayerData, writePlaylist, playlistByPercievedWorstScore } from 'bss
 import fs from 'fs';
 import { windowsFileNamify } from '../..';
 const meta = new SlashCommandBuilder()
-    .setName('playlist-of-percived-worst-score')
+    .setName('perceived-worst-score')
     .setDescription('Generate a playlist that orders based on percieved potential improvement')
     .addStringOption(option => option
         .setName('your-scoresaber-id')
